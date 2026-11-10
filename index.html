@@ -4,247 +4,534 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sérgio Luiz E. F. da Silva</title>
-<meta name="description" content="Sérgio Luiz E. F. da Silva — statistical physics, generalized entropies, robust statistics, seismic imaging and inverse problems. LAPPS/UFRN, Natal, Brazil.">
+<meta name="description" content="Sérgio Luiz E. F. da Silva, physicist working on generalized entropies, statistical physics, robust inverse problems and seismic imaging. Postdoctoral researcher at LAPPS, IMD/UFRN, Natal, Brazil.">
+<meta property="og:title" content="Sérgio Luiz E. F. da Silva">
+<meta property="og:description" content="Generalized entropies, statistical physics, robust inverse problems and seismic imaging.">
+<meta property="og:image" content="photo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #fbfaf7;
-    --surface: #ffffff;
-    --text: #1d1d1f;
-    --muted: #5f5f66;
-    --line: #e6e3dc;
-    --accent: #1f4e79;
-    --accent-soft: #e8eef5;
+    --paper: #f3f5f6;
+    --sheet: #ffffff;
+    --ink: #1b2430;
+    --ink-2: #4c5766;
+    --rule: #d6dce2;
+    --neg: #24508f;      /* seismic negative polarity: links, primary */
+    --pos: #b02e2e;      /* seismic positive polarity: the highlighted curve */
+    --neg-soft: #e3eaf4;
+    --serif: "Spectral", Georgia, serif;
+    --sans: "Public Sans", system-ui, sans-serif;
+    --gutter: 168px;
   }
   @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #121417;
-      --surface: #1a1d21;
-      --text: #ececec;
-      --muted: #a2a6ad;
-      --line: #2b2f35;
-      --accent: #8ab4e0;
-      --accent-soft: #1f2a36;
+    :root:not([data-theme="light"]) {
+      --paper: #12161c; --sheet: #181d25; --ink: #e4e8ee; --ink-2: #a3adba;
+      --rule: #2c3440; --neg: #8fb2e6; --pos: #f08a7e; --neg-soft: #1e2938;
     }
   }
+  :root[data-theme="dark"] {
+    --paper: #12161c; --sheet: #181d25; --ink: #e4e8ee; --ink-2: #a3adba;
+    --rule: #2c3440; --neg: #8fb2e6; --pos: #f08a7e; --neg-soft: #1e2938;
+  }
+
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font: 16px/1.65 "Inter", system-ui, sans-serif;
+    margin: 0; background: var(--paper); color: var(--ink);
+    font: 18px/1.7 var(--serif);
+    -webkit-font-smoothing: antialiased;
   }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  a { color: var(--neg); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--pos); }
+  :focus-visible { outline: 2px solid var(--neg); outline-offset: 3px; border-radius: 2px; }
+  img { max-width: 100%; }
 
-  nav {
-    position: sticky; top: 0; z-index: 10;
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--line);
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+  /* top bar */
+  .bar {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--paper) 90%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--sans); font-size: 14px;
   }
-  nav .inner {
-    max-width: 880px; margin: 0 auto; padding: 12px 20px;
-    display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-between; align-items: center;
+  .bar .wrap { display: flex; align-items: center; gap: 24px; height: 52px; }
+  .bar .home { font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--ink); text-decoration: none; white-space: nowrap; }
+  .bar nav { display: flex; gap: 20px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+  .bar nav::-webkit-scrollbar { display: none; }
+  .bar nav a { color: var(--ink-2); text-decoration: none; white-space: nowrap; }
+  .bar nav a:hover, .bar nav a.on { color: var(--ink); }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: end; padding: 64px 0 36px; }
+  .hero h1 {
+    font-weight: 500; font-size: clamp(2.4rem, 5.6vw, 4rem); line-height: 1.04;
+    letter-spacing: -0.02em; margin: 0 0 20px;
   }
-  nav .brand { font-family: "Source Serif 4", serif; font-weight: 600; color: var(--text); }
-  nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; }
-  nav ul a { color: var(--muted); }
-  nav ul a:hover { color: var(--accent); text-decoration: none; }
+  .hero .post { font-family: var(--sans); font-size: 15px; line-height: 1.55; color: var(--ink-2); margin: 0 0 22px; }
+  .hero .post strong { color: var(--ink); font-weight: 600; }
+  .hero .lede { font-size: 1.22rem; line-height: 1.55; max-width: 34em; margin: 0 0 26px; }
+  .portrait { width: 220px; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 4px; display: block; filter: saturate(.92); }
+  .ids { display: flex; flex-wrap: wrap; gap: 8px 18px; font-family: var(--sans); font-size: 14.5px; }
+  .ids a { text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--neg) 35%, transparent); padding-bottom: 1px; }
 
-  main { max-width: 880px; margin: 0 auto; padding: 0 20px 64px; }
-  section { padding: 48px 0 8px; }
-  h1, h2, h3 { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; line-height: 1.25; }
-  h2 { font-size: 1.5rem; margin: 0 0 18px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  /* the κ figure */
+  figure.kappa { margin: 8px 0 0; padding: 28px 0 8px; border-top: 1px solid var(--rule); }
+  .kappa svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .kappa .axis { stroke: var(--rule); stroke-width: 1; }
+  .kappa .fam { fill: none; stroke: var(--neg); stroke-width: 1.2; opacity: .45; }
+  .kappa .fam.gauss { opacity: .9; stroke: var(--ink-2); stroke-dasharray: 3 4; }
+  .kappa .gain { fill: var(--pos); opacity: .2; stroke: none; }
+  .kappa .live { fill: none; stroke: var(--pos); stroke-width: 2.4; stroke-linejoin: round; }
+  .kappa .tick { font-family: var(--sans); font-size: 12px; fill: var(--ink-2); }
+  .kappa .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 1.6s cubic-bezier(.3,.6,.2,1) forwards; }
+  .kappa .draw:nth-of-type(2) { animation-delay: .12s } .kappa .draw:nth-of-type(3) { animation-delay: .24s }
+  .kappa .draw:nth-of-type(4) { animation-delay: .36s } .kappa .live.draw { animation-delay: .55s; animation-duration: 1.9s }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) { .kappa .draw { animation: none; stroke-dashoffset: 0; } }
+  .kappa figcaption { display: grid; grid-template-columns: 1fr auto; gap: 10px 32px; align-items: center; margin-top: 14px; }
+  .kappa .cap { font-size: 15.5px; line-height: 1.55; color: var(--ink-2); max-width: 44em; margin: 0; }
+  .kappa .cap em { color: var(--ink); }
+  .kctl { display: flex; align-items: center; gap: 12px; font-family: var(--sans); font-size: 14px; color: var(--ink-2); white-space: nowrap; }
+  .kctl output { font-family: var(--serif); font-size: 17px; color: var(--pos); min-width: 4.6em; font-variant-numeric: tabular-nums; }
+  .kctl input { accent-color: var(--pos); width: 160px; }
 
-  .hero { display: grid; grid-template-columns: 180px 1fr; gap: 36px; align-items: center; padding-top: 56px; }
-  .photo {
-    width: 180px; height: 180px; border-radius: 50%;
-    background: var(--accent-soft); color: var(--accent);
-    display: grid; place-items: center; overflow: hidden;
-    font-family: "Source Serif 4", serif; font-size: 52px; font-weight: 600;
-    border: 1px solid var(--line);
+  /* sections: heading in the gutter */
+  section.block { display: grid; grid-template-columns: var(--gutter) 1fr; gap: 0 40px; padding: 56px 0 8px; border-top: 1px solid var(--rule); margin-top: 48px; }
+  section.block > h2 {
+    font-weight: 500; font-size: 1.5rem; line-height: 1.2; margin: 0; letter-spacing: -0.01em;
+    position: sticky; top: 76px; align-self: start;
   }
-  .photo img { width: 100%; height: 100%; object-fit: cover; }
-  .hero h1 { font-size: 2.2rem; margin: 0 0 6px; }
-  .hero .role { color: var(--muted); margin: 0 0 14px; }
-  .links { display: flex; flex-wrap: wrap; gap: 8px; }
-  .links a {
-    font-size: 14px; padding: 6px 12px; border-radius: 999px;
-    border: 1px solid var(--line); background: var(--surface); color: var(--text);
+  .body { min-width: 0; max-width: 46rem; }
+  .body > p:first-child { margin-top: 0; }
+  h3 { font-weight: 600; font-size: 1.12rem; margin: 2.2em 0 .5em; line-height: 1.35; }
+  .body > h3:first-child { margin-top: 0; }
+  .meta, .sans { font-family: var(--sans); font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+
+  /* research themes */
+  .themes { display: grid; gap: 30px; }
+  .theme h3 { margin: 0 0 .35em; }
+  .theme p { margin: 0; }
+  .theme .papers { margin-top: 8px; }
+
+  /* dated rows */
+  .rows { list-style: none; margin: 0; padding: 0; }
+  .rows > li { display: grid; grid-template-columns: 92px 1fr; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+  .rows > li:last-child { border-bottom: 0; }
+  .rows .when { font-family: var(--sans); font-size: 14px; color: var(--ink-2); padding-top: 3px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .rows .what strong { font-weight: 600; display: block; line-height: 1.4; }
+  .rows .what p { margin: 4px 0 0; }
+
+  /* publications */
+  .pubtools { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; margin: 0 0 28px; font-family: var(--sans); font-size: 14px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips button {
+    font: inherit; color: var(--ink-2); background: transparent; cursor: pointer;
+    border: 1px solid var(--rule); border-radius: 999px; padding: 5px 12px;
   }
-  .links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
-
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none; margin: 0; }
-  .tags li { background: var(--accent-soft); color: var(--accent); padding: 5px 12px; border-radius: 6px; font-size: 14px; }
-
-  .entry { display: grid; grid-template-columns: 120px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px dashed var(--line); }
-  .entry:last-child { border-bottom: 0; }
-  .entry .when { color: var(--muted); font-size: 14px; }
-  .entry .what strong { display: block; }
-  .entry .what span { color: var(--muted); font-size: 15px; }
-
-  ol.pubs { padding-left: 20px; margin: 0; }
-  ol.pubs li { margin-bottom: 14px; }
-  ol.pubs .title { font-weight: 500; }
-  ol.pubs .venue { color: var(--muted); font-style: italic; }
-
-  .card {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
-    padding: 20px 22px; margin-bottom: 14px;
+  .chips button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .chips button span { opacity: .7; margin-left: 4px; font-variant-numeric: tabular-nums; }
+  .pubtools input[type=search] {
+    font: inherit; color: var(--ink); background: var(--sheet); border: 1px solid var(--rule);
+    border-radius: 6px; padding: 7px 11px; flex: 1 1 200px; min-width: 0;
   }
-  .card h3 { margin: 0 0 4px; font-size: 1.1rem; }
-  .card p { margin: 6px 0 0; color: var(--muted); font-size: 15px; }
+  .year { display: grid; grid-template-columns: 56px 1fr; gap: 18px; }
+  .year + .year { margin-top: 18px; }
+  .year > .y { font-family: var(--sans); font-weight: 600; font-size: 14px; color: var(--ink-2); padding-top: 4px; position: sticky; top: 68px; align-self: start; font-variant-numeric: tabular-nums; }
+  .year ol { list-style: none; padding: 0; margin: 0; }
+  .pub { padding: 0 0 18px; }
+  .pub .t { font-size: 1.04rem; line-height: 1.45; display: block; }
+  .pub .a, .pub .v { font-family: var(--sans); font-size: 14px; line-height: 1.5; color: var(--ink-2); display: block; }
+  .pub .a b { color: var(--ink); font-weight: 600; }
+  .pub .v i { font-style: italic; }
+  .pub .kind { color: var(--neg); }
+  .pub .doi { white-space: nowrap; }
+  .empty { font-family: var(--sans); font-size: 15px; color: var(--ink-2); }
+  .more { margin-top: 10px; font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--neg); background: none; border: 1px solid var(--rule); border-radius: 6px; padding: 8px 14px; cursor: pointer; }
+  .more:hover { border-color: var(--neg); }
+
+  .inline-list { padding-left: 1.1em; margin: .4em 0 0; }
+  .inline-list li { margin: .25em 0; }
+  .twocol { columns: 2 260px; column-gap: 32px; }
+  .twocol li { break-inside: avoid; }
+
+  .note { background: var(--neg-soft); border-radius: 6px; padding: 16px 18px; margin-top: 4px; }
+  .note p { margin: 0; }
+  .note .meta { margin-top: 6px; }
 
   address { font-style: normal; }
-  footer { text-align: center; color: var(--muted); font-size: 13px; padding: 28px 20px; border-top: 1px solid var(--line); }
+  footer { margin-top: 72px; border-top: 1px solid var(--rule); padding: 26px 0 40px; font-family: var(--sans); font-size: 13.5px; color: var(--ink-2); }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+  .theme-btn { font: inherit; color: var(--ink-2); background: none; border: 0; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
 
+  @media (max-width: 860px) {
+    :root { --gutter: 1fr; }
+    section.block { grid-template-columns: 1fr; gap: 18px; padding-top: 40px; margin-top: 36px; }
+    section.block > h2 { position: static; }
+  }
   @media (max-width: 640px) {
-    .hero { grid-template-columns: 1fr; text-align: center; gap: 20px; padding-top: 36px; }
-    .photo { margin: 0 auto; width: 140px; height: 140px; font-size: 42px; }
-    .links { justify-content: center; }
-    .hero h1 { font-size: 1.8rem; }
-    .entry { grid-template-columns: 1fr; gap: 2px; }
-    nav ul { gap: 12px; }
+    body { font-size: 17px; }
+    .wrap { padding: 0 16px; }
+    .hero { grid-template-columns: 1fr; gap: 24px; padding-top: 32px; }
+    .hero .portrait { width: 132px; order: -1; }
+    .bar .home { display: none; }
+    .bar nav { margin-left: 0; gap: 16px; }
+    .kappa figcaption { grid-template-columns: 1fr; }
+    .kctl input { flex: 1; width: auto; }
+    .rows > li { grid-template-columns: 1fr; gap: 2px; }
+    .year { grid-template-columns: 1fr; gap: 6px; }
+    .year > .y { position: static; }
   }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="inner">
-    <a class="brand" href="#">S. L. E. F. da Silva</a>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#research">Research</a></li>
-      <li><a href="#publications">Publications</a></li>
-      <li><a href="#editorial">Editorial</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+<header class="bar">
+  <div class="wrap">
+    <a class="home" href="#top">S. L. E. F. da Silva</a>
+    <nav aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#publications">Publications</a>
+      <a href="#service">Editorial work</a>
+      <a href="#career">Career</a>
+      <a href="#teaching">Teaching</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </div>
-</nav>
+</header>
 
-<main>
-  <header class="hero">
-    <!-- Put your photo in the repository as photo.jpg; initials are shown if it is missing -->
-    <div class="photo"><img src="sergiodasilva_photo.jpeg" alt="Sérgio Luiz E. F. da Silva" onerror="this.parentNode.textContent='SS';"></div>
+<main class="wrap" id="top">
+  <div class="hero">
     <div>
-      <h1>Sérgio Luiz E. F. da Silva</h1>
-      <p class="role">
-        Laboratory of Parallel Architectures for Signal Processing (LAPPS)<br>
-        Federal University of Rio Grande do Norte (UFRN), Natal, Brazil
+      <h1>Sérgio Luiz E. F.<br>da Silva</h1>
+      <p class="post">
+        <strong>Postdoctoral Researcher</strong>, Laboratory of Parallel Architectures for Signal Processing (LAPPS)<br>
+        Instituto Metrópole Digital, Federal University of Rio Grande do Norte, Natal, Brazil
       </p>
-      <div class="links">
-        <a href="mailto:sergio.silva.highres@imd.ufrn.br">Email</a>
-        <a href="https://orcid.org/0000-0002-6384-5049" target="_blank" rel="noopener">ORCID</a>
-        <a href="https://www.linkedin.com/in/s%C3%A9rgio-luiz-b51a61144/" target="_blank" rel="noopener">LinkedIn</a>
-        <!-- Add your profiles: replace the # with your URLs, or delete the line -->
-        <a href="#" target="_blank" rel="noopener">Google Scholar</a>
-        <a href="#" target="_blank" rel="noopener">ResearchGate</a>
+      <p class="lede">I study generalized entropies and use them to build statistical methods that stay reliable when data are noisy, heavy-tailed and full of outliers, from seismic imaging to earthquake statistics.</p>
+      <div class="ids">
+        <a href="mailto:sergio.silva.highres@imd.ufrn.br">sergio.silva.highres@imd.ufrn.br</a>
+        <a href="https://orcid.org/0000-0002-6384-5049" rel="noopener">ORCID</a>
+        <a href="http://lattes.cnpq.br/5763232349330792" rel="noopener">Lattes CV</a>
+        <a href="https://www.linkedin.com/in/s%C3%A9rgio-luiz-b51a61144/" rel="noopener">LinkedIn</a>
       </div>
     </div>
-  </header>
+    <img class="portrait" src="photo.jpg" alt="Portrait of Sérgio Luiz E. F. da Silva" width="220" height="220">
+  </div>
 
-  <section id="about">
+  <figure class="kappa" aria-labelledby="kcap">
+    <svg id="kplot" viewBox="0 0 1000 210" role="img" aria-label="Family of κ-deformed Gaussian curves. Larger κ gives heavier tails."></svg>
+    <figcaption>
+      <p class="cap" id="kcap">The κ-deformed Gaussian, <em>exp<sub>κ</sub>(−x²/2)</em>. The dashed curve is the ordinary Gaussian (κ = 0); the shaded band shows where the κ-curve rises above it. As κ grows, the tails thicken and decay as a power law, so a few extreme values no longer dominate a fit. This is why κ-statistics gives outlier-resistant estimators.</p>
+      <label class="kctl">κ <input id="kslider" type="range" min="0" max="0.95" step="0.01" value="0.7" aria-describedby="kcap"> <output id="kval" for="kslider">κ = 0.70</output></label>
+    </figcaption>
+  </figure>
+
+  <section class="block" id="about">
     <h2>About</h2>
-    <p>
-      I am a physicist working at the interface between statistical physics and data-driven inference.
-      My research develops generalized entropic frameworks — in particular Kaniadakis κ-statistics,
-      Tsallis q-statistics and related deformed formalisms — and applies them to robust estimation,
-      inverse problems and high-resolution seismic imaging, where data are noisy, heavy-tailed and
-      far from Gaussian.
-    </p>
-    <p>
-      I collaborate closely with the Politecnico di Torino (DISAT) and the Istituto dei Sistemi Complessi
-      of the Italian National Research Council (ISC-CNR), and I have recently been exploring the
-      connections between statistical mechanics and artificial intelligence.
-    </p>
-  </section>
-
-  <section id="research">
-    <h2>Research interests</h2>
-    <ul class="tags">
-      <li>Complex systems</li>
-      <li>Statistical physics</li>
-      <li>Generalized entropies</li>
-      <li>κ- and q-statistics</li>
-      <li>Robust statistics</li>
-      <li>Inverse problems</li>
-      <li>Seismic imaging &amp; FWI</li>
-      <li>Optimal transport</li>
-      <li>Artificial intelligence</li>
-      <li>Statistical learning</li>
-    </ul>
-  </section>
-
-  <section id="publications">
-    <h2>Selected publications</h2>
-    <ol class="pubs">
-      <li>
-        <span class="title">A graph-space optimal transport FWI approach based on κ-generalized Gaussian distribution.</span>
-        S. L. E. F. da Silva, G. Kaniadakis.
-        <span class="venue">IMAGE 2023 Expanded Abstracts</span>, 670–674 (2023).
-        <a href="https://doi.org/10.1190/image2023-3916733.1" target="_blank" rel="noopener">doi</a> ·
-        <a href="https://arxiv.org/abs/2405.15536" target="_blank" rel="noopener">arXiv</a>
-      </li>
-      <li>
-        <span class="title">Robust parameter estimation based on the generalized log-likelihood in the context of Sharma–Taneja–Mittal measure.</span>
-        S. L. E. F. da Silva, G. Kaniadakis.
-        <span class="venue">Physical Review E</span> 104, 024107 (2021).
-        <a href="https://doi.org/10.1103/PhysRevE.104.024107" target="_blank" rel="noopener">doi</a>
-      </li>
-      <li>
-        <span class="title">An outlier-resistant κ-generalized approach for robust physical parameter estimation.</span>
-        S. L. E. F. da Silva, R. Silva, G. Z. dos Santos Lima, et al.
-        <a href="https://arxiv.org/abs/2111.09921" target="_blank" rel="noopener">arXiv:2111.09921</a>
-      </li>
-      <li>
-        <span class="title">Improving seismic inversion robustness via deformed Jackson Gaussian.</span>
-        S. A. Silva, S. L. E. F. da Silva, R. F. de Souza, A. A. Marinho, J. M. de Araújo, C. G. Bezerra.
-        <span class="venue">Entropy</span> 23(8), 1081 (2021).
-        <a href="https://doi.org/10.3390/e23081081" target="_blank" rel="noopener">doi</a>
-      </li>
-      <li>
-        <span class="title">Tsallis entropy, likelihood, and the robust seismic inversion.</span>
-        I. P. de Lima, S. L. E. F. da Silva, G. Corso, J. M. de Araújo.
-        <span class="venue">Entropy</span> 22(4), 464 (2020).
-        <a href="https://doi.org/10.3390/e22040464" target="_blank" rel="noopener">doi</a>
-      </li>
-      <li>
-        <span class="title">Robust full-waveform inversion using q-statistics.</span>
-        S. L. E. F. da Silva, C. A. N. da Costa, P. T. C. Carvalho, J. M. de Araújo, et al.
-        <span class="venue">Physica A</span> (2020).
-      </li>
-    </ol>
-    <p style="margin-top:18px">Full list on <a href="https://orcid.org/0000-0002-6384-5049" target="_blank" rel="noopener">ORCID</a>.</p>
-  </section>
-
-  <section id="editorial">
-    <h2>Editorial activities</h2>
-    <div class="card">
-      <h3>Guest Editor — <em>Entropy</em> (MDPI), Special Issue “Generalized Entropies in Statistical Physics”</h3>
-      <p>With G. Kaniadakis and A. M. Scarfone. Collects contributions presented at the SigmaPhi 2026
-        International Conference (Kolymbari, Crete, Greece, 6–10 July 2026), and is open to related work
-        on generalized statistical mechanics, information geometry, gravitation and cosmology, and the
-        interplay between statistical mechanics and artificial intelligence. Tentative deadline: 30 September 2027.</p>
+    <div class="body">
+      <p>I am a physicist working on statistical physics and complex systems. My research centers on generalized statistical mechanics, in particular Kaniadakis κ-statistics and Tsallis q-statistics, and on how these frameworks can be turned into robust tools for inverse problems and parameter estimation.</p>
+      <p>I received my PhD in Physics from the Federal University of Rio Grande do Norte (UFRN) in 2021. My thesis on full-waveform inversion based on generalized statistical mechanics received the PPGF Best Thesis Award. I have since worked at the Fluminense Federal University on industry-funded seismic imaging, and from 2022 to 2025 I collaborated with the Politecnico di Torino and the Italian National Research Council (CNR) on applications of non-extensive statistical mechanics.</p>
+      <p>Today I am a postdoctoral researcher at LAPPS, IMD/UFRN, where I work on seismic imaging in attenuating media and high-performance computing. I also teach mathematics at IMD and serve on the Editorial Board of <i>Entropy</i>.</p>
     </div>
   </section>
 
-  <section id="contact">
+  <section class="block" id="research">
+    <h2>Research</h2>
+    <div class="body themes">
+      <div class="theme">
+        <h3>Generalized entropies and statistical mechanics</h3>
+        <p>Foundations and consequences of non-Boltzmann–Gibbs statistics: Kaniadakis, Tsallis, Rényi and Sharma–Taneja–Mittal measures. This includes Newton's cooling law in generalized statistical mechanics and κ- and q-generalized versions of the Gutenberg–Richter law that link earthquake statistics with self-similarity.</p>
+      </div>
+      <div class="theme">
+        <h3>Robust inference and inverse problems</h3>
+        <p>Generalized likelihoods and objective functions that resist outliers and non-Gaussian noise, from κ- and q-Gaussian estimators to correntropy and Bayesian approaches. The aim is to estimate physical parameters you cannot measure directly, from data you cannot fully trust.</p>
+      </div>
+      <div class="theme">
+        <h3>Seismic imaging and high-performance computing</h3>
+        <p>Full-waveform inversion, least-squares reverse time migration, optimal-transport misfits, time-lapse (4D) monitoring and viscoacoustic Q-compensation, with field applications to ocean-bottom-node data from the Brazilian pre-salt. This work runs on GPU and supercomputing infrastructure in projects with Shell Brasil and Equinor, and led to the registered software <i>seiswave2D</i> and <i>seiswave3D</i>.</p>
+      </div>
+      <div class="theme">
+        <h3>Complex systems beyond geophysics</h3>
+        <p>Applications of the same statistical toolkit to anthropogenic seismicity, population dynamics, urban scaling laws and wind-field reconstruction for space-borne Doppler radar. I am increasingly interested in the interplay between statistical mechanics and artificial intelligence.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="publications">
+    <h2>Publications</h2>
+    <div class="body">
+      <p class="sans" id="pubsum" style="margin-top:0"></p>
+      <div class="pubtools">
+        <div class="chips" role="group" aria-label="Filter by type" id="chips"></div>
+        <input type="search" id="q" placeholder="Search titles, co-authors, venues" aria-label="Search publications">
+      </div>
+      <div id="publist" aria-live="polite"></div>
+      <button class="more" id="more" hidden>Show all years</button>
+    </div>
+  </section>
+
+  <section class="block" id="service">
+    <h2>Editorial work</h2>
+    <div class="body">
+      <h3>Entropy (MDPI)</h3>
+      <p style="margin-top:0">Member of the Editorial Board since 2022.</p>
+      <div class="note">
+        <p><strong>Generalized Entropies in Statistical Physics</strong>, Guest Editor with G. Kaniadakis and A. M. Scarfone.</p>
+        <p class="meta">Special Issue in preparation, collecting contributions from the SigmaPhi 2026 conference and related work. Submission deadline (tentative) 30 September 2027.</p>
+      </div>
+      <ul class="rows" style="margin-top:6px">
+        <li><span class="when">2023–2024</span><div class="what"><strong><a href="https://www.mdpi.com/journal/entropy/special_issues/7GXB49GKLH">180th Anniversary of Ludwig Boltzmann</a></strong><p class="meta">Guest Editor</p></div></li>
+        <li><span class="when">2023–2024</span><div class="what"><strong><a href="https://www.mdpi.com/journal/entropy/special_issues/O17K7OZ17K">New Challenges in Contemporary Statistical Physics</a></strong><p class="meta">Guest Editor</p></div></li>
+        <li><span class="when">2022–2023</span><div class="what"><strong><a href="https://www.mdpi.com/journal/entropy/special_issues/kaniadakis_entropy">Twenty Years of Kaniadakis Entropy: Current Trends and Future Perspectives</a></strong><p class="meta">Guest Editor</p></div></li>
+      </ul>
+
+      <h3>Conference organization</h3>
+      <ul class="rows">
+        <li><span class="when">2026</span><div class="what"><strong><a href="http://www.sigmaphi.polito.it/">SigmaPhi 2026</a>, International Conference on Statistical Physics</strong><p class="meta">Kolymbari, Crete, Greece. Organizing committee.</p></div></li>
+        <li><span class="when">2026</span><div class="what"><strong><a href="https://events.sbgf.org.br/?w=AIHPG26">1st AIHPG Workshop</a>, Artificial Intelligence &amp; High-Performance Geophysics</strong><p class="meta">Natal, Brazil. Organizing committee.</p></div></li>
+        <li><span class="when">2023</span><div class="what"><strong>SigmaPhi 2023, International Conference on Statistical Physics</strong><p class="meta">Chania, Crete, Greece. Organizing committee and editor of the book of abstracts.</p></div></li>
+      </ul>
+
+      <h3>Peer review</h3>
+      <p style="margin-top:0">Reviewer for <i>Chaos, Solitons &amp; Fractals</i>, <i>Entropy</i>, <i>The European Physical Journal Plus</i>, <i>IEEE Sensors Journal</i>, <i>IEEE Transactions on Geoscience and Remote Sensing</i>, <i>International Journal of Geomechanics</i>, <i>International Journal of Theoretical Physics</i>, <i>Inverse Problems</i> and <i>Journal of Applied Geophysics</i>.</p>
+
+      <h3>Thesis committees</h3>
+      <p style="margin-top:0">Examiner for five PhD theses and four MSc dissertations at UFRN, UFF, UERN and the University of São Paulo, on topics from generalized statistics in genomics to viscoelastic seismic modelling of the pre-salt.</p>
+    </div>
+  </section>
+
+  <section class="block" id="career">
+    <h2>Career</h2>
+    <div class="body">
+      <h3>Positions</h3>
+      <ul class="rows">
+        <li><span class="when">2026–</span><div class="what"><strong>Collaborating Lecturer in Mathematics</strong><p class="meta">Instituto Metrópole Digital, UFRN</p></div></li>
+        <li><span class="when">2024–</span><div class="what"><strong>Postdoctoral Researcher, LAPPS / nPITI, IMD–UFRN</strong><p class="meta">Seismic imaging in attenuating media and high-performance computing. Project “Non-Stationary Deconvolution and Imaging for High Resolution Seismic”, supported by Equinor Brasil.</p></div></li>
+        <li><span class="when">2022–2025</span><div class="what"><strong>Collaborating Researcher, Consiglio Nazionale delle Ricerche (CNR), Italy</strong><p class="meta">Non-extensive statistical mechanics applied to full-waveform inversion.</p></div></li>
+        <li><span class="when">2022–2024</span><div class="what"><strong>Researcher, Department of Applied Science and Technology (DISAT), Politecnico di Torino</strong><p class="meta">Geophysical applications of generalized statistical mechanics.</p></div></li>
+        <li><span class="when">2021–2022</span><div class="what"><strong>Postdoctoral Researcher, Seismic Inversion and Imaging Group (GISIS), Fluminense Federal University</strong><p class="meta">Seismic imaging based on statistical physics, wave propagation and geostatistics, in a project supported by Shell Brasil.</p></div></li>
+        <li><span class="when">2018–2021</span><div class="what"><strong>Research Fellow, UFRN, project “New Methods for Full-Waveform Inversion”</strong><p class="meta">Supported by Shell Brasil. Large-scale simulations on the Santos Dumont (LNCC) and SENAI CIMATEC Yemoja supercomputers.</p></div></li>
+        <li><span class="when">2013–2017</span><div class="what"><strong>Lecturer in Mathematics, Probability and Statistics, UFRN</strong><p class="meta">School of Science and Technology (ECT).</p></div></li>
+      </ul>
+
+      <h3>Education</h3>
+      <ul class="rows">
+        <li><span class="when">2017–2021</span><div class="what"><strong>PhD in Physics, UFRN</strong><p class="meta">Statistical physics and complex systems. Thesis: “Full-waveform inversion based on generalized statistical mechanics”. Advisor: G. Corso. PPGF Best Thesis Award 2021.</p></div></li>
+        <li><span class="when">2014–2016</span><div class="what"><strong>MSc in Geodynamics and Geophysics, UFRN</strong><p class="meta">Thesis: “Seismic moment tensors for events in northeastern Brazil from P- and S-wave spectral amplitudes”. Advisor: J. Julià; co-advisor: F. H. R. Bezerra.</p></div></li>
+        <li><span class="when">2009–2013</span><div class="what"><strong>BSc in Physics, UFRN</strong><p class="meta">Thesis: “Modelling of seismic waves in northeastern Brazil”. Advisor: J. Julià.</p></div></li>
+      </ul>
+
+      <h3>Research projects</h3>
+      <ul class="rows">
+        <li><span class="when">2024–</span><div class="what"><strong>Non-Stationary Deconvolution and Imaging for High Resolution Seismic</strong><p class="meta">LAPPS/IMD–UFRN with Equinor. Postdoctoral researcher in a team of 6 undergraduate and 5 PhD students.</p></div></li>
+        <li><span class="when">2022–</span><div class="what"><strong>NEXT-SM: Meccanica Statistica non Estensiva</strong><p class="meta">Coordinator, with G. Kaniadakis and A. M. Scarfone.</p></div></li>
+        <li><span class="when">2022–2024</span><div class="what"><strong>Applicazioni Geofisiche della Meccanica Statistica Generalizzata</strong><p class="meta">Politecnico di Torino. Coordinator: G. Kaniadakis.</p></div></li>
+        <li><span class="when">2021–2024</span><div class="what"><strong>Refraction seismics for characterization and monitoring of oil and gas reservoirs</strong><p class="meta">GISIS/UFF. Coordinator: M. Cetale.</p></div></li>
+        <li><span class="when">2017–2021</span><div class="what"><strong>New methods of seismic exploration by full-waveform inversion</strong><p class="meta">UFRN, supported by Shell Brasil. Coordinator: J. M. de Araújo.</p></div></li>
+      </ul>
+
+      <h3>Software</h3>
+      <ul class="rows">
+        <li><span class="when">2024</span><div class="what"><strong>seiswave2D and seiswave3D</strong><p class="meta">Seismic wave modelling software developed with the GISIS group (UFF). Registered at INPI under BR512024005309-3 and BR512024005310-7.</p></div></li>
+      </ul>
+
+      <h3>Awards</h3>
+      <ul class="rows">
+        <li><span class="when">2024</span><div class="what"><strong>Geosciences 2024 Outstanding Reviewer Award</strong><p class="meta">MDPI</p></div></li>
+        <li><span class="when">2023</span><div class="what"><strong>Entropy 2022 Outstanding Reviewer Award</strong><p class="meta">MDPI</p></div></li>
+        <li><span class="when">2022</span><div class="what"><strong>PPGF Best Thesis Award 2021</strong><p class="meta">Graduate Program in Physics, UFRN</p></div></li>
+        <li><span class="when">2017</span><div class="what"><strong>Honoured professor of the 2017.1 graduating class</strong><p class="meta">Bachelor of Science and Technology, ECT/UFRN, a class of 190 graduates.</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="teaching">
+    <h2>Teaching and supervision</h2>
+    <div class="body">
+      <h3>Courses taught</h3>
+      <p style="margin-top:0">At UFRN, more than 25 classes since 2013: Probability and Statistics, Integrated Modelling (numerical modelling of physical systems with differential equations), Calculus I and III, Linear Algebra, Vectors and Analytic Geometry, Pre-Calculus and, since 2026, Euclidean Geometry at IMD.</p>
+
+      <h3>Supervision</h3>
+      <ul class="rows">
+        <li><span class="when">2025</span><div class="what"><strong>Jonatas Oliveira de Araujo</strong><p class="meta">BSc thesis in Geophysics, UFF. 1D acoustic full-waveform inversion with Bayesian analysis and Markov chain Monte Carlo.</p></div></li>
+        <li><span class="when">2024</span><div class="what"><strong>Brenno Hochwart Cardoso</strong><p class="meta">BSc thesis in Geophysics, UFF. Time-lapse full-waveform inversion strategies in a typical Brazilian pre-salt reservoir with OBN geometry.</p></div></li>
+        <li><span class="when">2022</span><div class="what"><strong>João Victor Tomaz de Lima</strong> (co-supervisor)<p class="meta">MSc in Physics, UFRN. Robust approaches to inverse problems based on Rényi, Tsallis and Kaniadakis statistics.</p></div></li>
+      </ul>
+
+      <h3>Outreach</h3>
+      <p style="margin-top:0">Short course on the R statistical system for engineering at CIENTEC/UFRN (2017), and a telescope-building workshop open to the public during the International Year of Astronomy (2009).</p>
+    </div>
+  </section>
+
+  <section class="block" id="contact">
     <h2>Contact</h2>
-    <address>
-      Laboratory of Parallel Architectures for Signal Processing (LAPPS)<br>
-      Federal University of Rio Grande do Norte<br>
-      Av. Senador Salgado Filho 3000, 59078-970 Natal, RN, Brazil<br>
-      <a href="mailto:sergio.silva.highres@imd.ufrn.br">sergio.silva.highres@imd.ufrn.br</a>
-    </address>
+    <div class="body">
+      <address>
+        Laboratory of Parallel Architectures for Signal Processing (LAPPS)<br>
+        Instituto Metrópole Digital, Federal University of Rio Grande do Norte<br>
+        Av. Senador Salgado Filho 3000, 59078-970 Natal, RN, Brazil<br>
+        <a href="mailto:sergio.silva.highres@imd.ufrn.br">sergio.silva.highres@imd.ufrn.br</a>
+      </address>
+    </div>
   </section>
 </main>
 
-<footer>© <span id="y">2026</span> Sérgio Luiz E. F. da Silva · Hosted on GitHub Pages</footer>
-<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Sérgio Luiz E. F. da Silva</span>
+    <button class="theme-btn" id="themeBtn" type="button">Switch to dark theme</button>
+  </div>
+</footer>
+
+<script>
+const PUBS = [{"cat":"conf","year":2026,"title":"A κ-Generalised Q-Least-Squares Reverse Time Migration with Deblurring Filters","authors":["M. Gadelha","S. L. E. F. da Silva","J. M. de Araújo","S. Xavier-de-Souza","T. Barros"],"venue":"Conference Proceedings, 87th EAGE Annual Conference & Exhibition","volume":"","number":"","pages":"1–5","doi":"","url":""},{"cat":"journal","year":2026,"title":"Correntropy-Based Robust Blind Seismic Deconvolution","authors":["T. Câmara","K. Nose-Filho","P. O. A. Santos","S. L. E. F. da Silva","B. C. Z. Honório","J. L. Matias","S. Xavier-de-Souza","T. Barros","L. F. Silveira"],"venue":"IEEE Transactions on Geoscience and Remote Sensing","volume":"64","number":"","pages":"1–17","doi":"10.1109/TGRS.2026.3681133","url":""},{"cat":"journal","year":2026,"title":"Correntropy-based least-squares reverse time migration","authors":["S. L. E. F. da Silva","G. Araújo","T. Câmara","L. F. de Queiroz Silveira","S. Xavier-de-Souza","T. Barros"],"venue":"Journal of Applied Geophysics","volume":"253","number":"","pages":"106401","doi":"10.1016/j.jappgeo.2026.106401","url":""},{"cat":"conf","year":2026,"title":"Improving Q-Compensated Least-Squares Migration with a Correntropy Objective Function","authors":["S. L. E. F. da Silva","M. Gadelha","T. T. Câmara","P. Santos","S. Xavier-de-Souza","L. Silveira","T. Barros"],"venue":"Conference Proceedings, First EAGE/SBGf Workshop on Seismic Processing","volume":"2026","number":"1","pages":"1–5","doi":"10.3997/2214-4609.202682037","url":"https://www.earthdoc.org/content/papers/10.3997/2214-4609.202682037"},{"cat":"conf","year":2026,"title":"Joint Least-Squares Full-Wavefield Inversion for Q-Factor and Vector Reflectivity","authors":["S. L. E. F. da Silva","S. Xavier-de-Souza","T. Barros"],"venue":"Conference Proceedings, 87th EAGE Annual Conference & Exhibition","volume":"","number":"","pages":"1–5","doi":"","url":""},{"cat":"journal","year":2026,"title":"Source wavelet estimation with machine learning and generalized seismic wavelets","authors":["R. de Oliveira Silva","R. C. F. Araújo","T. Barros","J. M. de Araújo","S. Xavier-de-Souza","S. L. E. F. da Silva","G. Corso"],"venue":"Journal of Applied Geophysics","volume":"251","number":"","pages":"106316","doi":"10.1016/j.jappgeo.2026.106316","url":"https://www.sciencedirect.com/science/article/pii/S0926985126002259"},{"cat":"journal","year":2026,"title":"Sparse Sampling Reconstruction of Wind Fields for Space-Borne Doppler Radars","authors":["S. L. E. F. da Silva","A. Battaglia","C. Cambiotti","A. F. Carbone"],"venue":"IEEE Transactions on Geoscience and Remote Sensing","volume":"64","number":"","pages":"5103317","doi":"10.1109/TGRS.2026.3708410","url":""},{"cat":"journal","year":2026,"title":"κ-Generalized Least-Squares Reverse Time Migration","authors":["S. L. E. F. da Silva","G. Kaniadakis","C. A. Luna","B. C. Z. Honório","J. L. Matias","S. Xavier-de-Souza","T. Barros"],"venue":"Geophysical Prospecting","volume":"74","number":"7","pages":"","doi":"10.1111/1365-2478.70258","url":""},{"cat":"journal","year":2025,"title":"180th Anniversary of Ludwig Boltzmann","authors":["A. M. Scarfone","S. L. E. F. da Silva"],"venue":"Entropy","volume":"27","number":"4","pages":"","doi":"10.3390/e27040394","url":"https://www.mdpi.com/1099-4300/27/4/394"},{"cat":"conf","year":2025,"title":"1D Acoustic Full-Waveform Inversion Using Bayesian Analysis with Markov Chain Monte Carlo","authors":["J. O. de Araujo","S. L. E. F. da Silva","M. Cetale"],"venue":"Proceedings of the 19th International Congress of the Brazilian Geophysical Society","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"conf","year":2025,"title":"A Memory-Efficient GPU-Based Viscoacoustic Reverse Time Migration","authors":["T. Barros","S. L. E. F. da Silva","G. Araújo","S. Xavier-de-Souza"],"venue":"Proceedings of the 19th International Congress of the Brazilian Geophysical Society","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"conf","year":2025,"title":"A Time-Fractional Viscoacoustic Wave Equation Based on Complex Phase Velocity Expression","authors":["T. Barros","F. J. de Lima","S. S. Galvão","S. Xavier-de-Souza","S. L. E. F. da Silva"],"venue":"Proceedings of the 19th International Congress of the Brazilian Geophysical Society","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"conf","year":2025,"title":"A κ-Generalized Least-Squares Reverse Time Migration Approach for Robust Seismic Imaging","authors":["S. L. E. F. da Silva","F. J. Lima","C. A. N. da Costa","T. Barros","S. Xavier-de-Souza"],"venue":"Conference Proceedings, 86th EAGE Annual Conference & Exhibition","volume":"","number":"","pages":"1–5","doi":"","url":""},{"cat":"conf","year":2025,"title":"An Open-Source High-Performance Computing Software for 3D Geophysical Modeling and Inversion","authors":["T. Barros","Í. de Assis","A. Oliveira","J. Fernandes","C. Santana","E. Lacerda","C. A. N. da Costa","S. Xavier-de-Souza","S. L. E. F. da Silva","H. Chauris"],"venue":"Proceedings of the 19th International Congress of the Brazilian Geophysical Society","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"chapter","year":2025,"title":"Capturing urban scaling laws via spatio-temporal correlated clusters","authors":["A. Carbone","S. L. E. F. da Silva","G. Kaniadakis"],"venue":"Urban Scaling: Allometry in Urban Studies and Spatial Science","volume":"","number":"","pages":"310–323","doi":"10.4324/9781003288312-35","url":""},{"cat":"journal","year":2025,"title":"Comparative analysis of eikonal-based first-arrival tomography: A case study from the Santos Basin, Brazil","authors":["P. H. B. Alves","M. Cetale","S. L. E. F. da Silva","L. A. Santos"],"venue":"Geophysical Prospecting","volume":"73","number":"4","pages":"1060–1075","doi":"10.1111/1365-2478.13657","url":"https://onlinelibrary.wiley.com/doi/abs/10.1111/1365-2478.13657"},{"cat":"conf","year":2025,"title":"Robust Least-Squares Reverse Time Migration Using a Correntropy-Based Objective Function","authors":["T. Barros","S. L. E. F. da Silva","G. Araújo","L. F. Silveira","T. Câmara","S. Xavier-de-Souza"],"venue":"Proceedings of the 19th International Congress of the Brazilian Geophysical Society","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"journal","year":2025,"title":"Statistical models for earthquakes: A Bayesian analysis","authors":["M. O. Costa","S. L. E. F. da Silva","R. Silva","G. S. França","C. S. Vilar","J. S. Alcaniz"],"venue":"Physica A: Statistical Mechanics and its Applications","volume":"674","number":"","pages":"130678","doi":"10.1016/j.physa.2025.130678","url":"https://www.sciencedirect.com/science/article/pii/S0378437125003309"},{"cat":"conf","year":2025,"title":"Target-Oriented OBN Geometry for Time-lapse First-arrival Tomography Reservoir Monitoring","authors":["P. H. B. Alves","S. L. E. F. da Silva","M. Cetale"],"venue":"Conference Proceedings, First EAGE/SBGf Workshop on Marine Seismic Acquisition","volume":"","number":"","pages":"1–5","doi":"","url":""},{"cat":"conf","year":2025,"title":"Time-Domain Viscoacoustic Wave Equation Based on Kaniadakis κ-Deformed Statistics","authors":["J. M. Araújo","T. Barros","S. Xavier-de-Souza","M. Gadelha","C. A. N. da Costa","S. L. E. F. da Silva"],"venue":"Proceedings of the 19th International Congress of the Brazilian Geophysical Society","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"journal","year":2025,"title":"Twenty Years of Kaniadakis Entropy: Current Trends and Future Perspectives","authors":["D. T. Hristopulos","S. L. E. F. da Silva","A. M. Scarfone"],"venue":"Entropy","volume":"27","number":"3","pages":"","doi":"10.3390/e27030247","url":"https://www.mdpi.com/1099-4300/27/3/247"},{"cat":"conf","year":2025,"title":"Viscoacoustic Wave Modeling with a Time-Domain Complex-Valued Equation Using Tsallis q-Logarithm","authors":["T. Barros","S. L. E. F. da Silva","S. Xavier-de-Souza","C. A. N. da Costa","S. S. Galvão"],"venue":"Proceedings of the 19th International Congress of the Brazilian Geophysical Society","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"journal","year":2024,"title":"Assessing Time-Lapse Full-Waveform Inversion Strategies in a Brazilian Pre-Salt Setting","authors":["B. Hochwart","S. L. E. F. da Silva","M. Cetale","R. M. Moreira"],"venue":"Brazilian Journal of Geophysics","volume":"42","number":"1","pages":"e2308","doi":"10.22564/brjg.v41i2.2308","url":""},{"cat":"journal","year":2024,"title":"Bayesian Weighted Time-Lapse Full-Waveform Inversion Using a Receiver-Extension Strategy","authors":["S. L. E. F. da Silva","A. Karsou","R. M. Moreira","M. Cetale"],"venue":"IEEE Transactions on Geoscience and Remote Sensing","volume":"62","number":"","pages":"1–22","doi":"10.1109/TGRS.2024.3434443","url":""},{"cat":"conf","year":2024,"title":"Detecting Water Injection Effects in Brazilian Pre-Salt Reservoirs Using a Circular Shot OBN Survey","authors":["F. T. Costa","S. L. E. F. da Silva","F. Capuzzo","A. Karsou","R. Moreira","J. Lopez","M. Cetale"],"venue":"Conference Proceedings, Fourth EAGE Conference on Pre-Salt Reservoir","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"conf","year":2024,"title":"Generalised Central-Difference Time-Lapse Full-Waveform Inversion with Bayesian Analysis","authors":["S. L. E. F. da Silva","G. Kaniadakis","J. B. de Azevedo","A. Karsou","R. Moreira","M. Cetale"],"venue":"Conference Proceedings, 85th EAGE Annual Conference & Exhibition (including the Workshop Programme)","volume":"","number":"","pages":"1–5","doi":"","url":""},{"cat":"conf","year":2024,"title":"Low-Impact Seismic Sources for Brazilian Pre-Salt Imaging","authors":["F. Capuzzo","M. Cetale","S. Grandi","J. Lopez","S. L. E. F. da Silva","F. Costa","R. Moreira"],"venue":"Conference Proceedings, Fourth EAGE Conference on Pre-Salt Reservoir","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"journal","year":2024,"title":"Multimodal Non-Extensive Frequency-Magnitude Distributions and Their Relationship to Multi-Source Seismicity","authors":["E. de la Barra","P. Vega-Jorquera","S. L. E. F. da Silva"],"venue":"Entropy","volume":"26","number":"12","pages":"","doi":"10.3390/e26121040","url":"https://www.mdpi.com/1099-4300/26/12/1040"},{"cat":"conf","year":2024,"title":"Reconstruction of the Horizontal Wind Field Inside Weather Systems from the Sparse Sampling Envisaged for the Wind Velocity Radar Nephoscope (WIVERN) Mission","authors":["A. Battaglia","C. Cambiotti","A. F. Carbone","S. L. E. F. da Silva"],"venue":"IGARSS 2024 – 2024 IEEE International Geoscience and Remote Sensing Symposium","volume":"","number":"","pages":"8925","doi":"","url":""},{"cat":"journal","year":2024,"title":"Refraction FWI of a Circular Shot OBN Acquisition in the Brazilian Presalt Region","authors":["S. L. E. F. da Silva","F. T. Costa","A. Karsou","A. de Souza","F. Capuzzo","R. M. Moreira","J. Lopez","M. Cetale"],"venue":"IEEE Transactions on Geoscience and Remote Sensing","volume":"62","number":"","pages":"1–18","doi":"10.1109/TGRS.2024.3426956","url":""},{"cat":"journal","year":2024,"title":"Research note: Application of refraction full-waveform inversion of ocean bottom node data using a squared-slowness model parameterization","authors":["S. L. E. F. da Silva","F. Costa","A. Karsou","F. Capuzzo","R. Moreira","J. Lopez","M. Cetale"],"venue":"Geophysical Prospecting","volume":"72","number":"","pages":"1189–1195","doi":"10.1111/1365-2478.13454","url":""},{"cat":"conf","year":2024,"title":"Seismic Imaging Using a Circular Shot OBN Geometry: Experiences and Lessons Learned","authors":["S. L. E. F. da Silva","F. Costa","A. Karsou","F. Capuzzo","R. Moreira","J. Lopez","M. Cetale"],"venue":"Conference Proceedings, Fourth EAGE Conference on Pre-Salt Reservoir","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"conf","year":2024,"title":"Seismic first arrival tomography for top salt velocity update: A case study in the Santos Basin, Brazil","authors":["P. H. B. Alves","M. Cetale","R. M. Moreira","S. L. E. F. da Silva","J. Lopez"],"venue":"Conference Proceedings, Fourth International Meeting for Applied Geoscience & Energy Expanded Abstracts","volume":"","number":"","pages":"1393","doi":"","url":""},{"cat":"conf","year":2024,"title":"Weighted stacking of up- and down-going RTM images using peak signal-to-noise ratio analysis","authors":["S. L. E. F. da Silva","A. A. Karsou","P. H. B. Alves","R. M. Moreira","J. Lopez","M. Cetale"],"venue":"Conference Proceedings, Fourth International Meeting for Applied Geoscience & Energy Expanded Abstracts","volume":"","number":"","pages":"2152–2156","doi":"","url":""},{"cat":"journal","year":2023,"title":"A Graph-Space Optimal Transport Approach Based on Kaniadakis κ-Gaussian Distribution for Inverse Problems Related to Wave Propagation","authors":["S. L. E. F. da Silva","J. M. de Araújo","E. de la Barra","G. Corso"],"venue":"Entropy","volume":"25","number":"7","pages":"","doi":"10.3390/e25070990","url":""},{"cat":"conf","year":2023,"title":"A graph-space optimal transport FWI approach based on κ-generalized Gaussian distribution","authors":["S. L. E. F. da Silva","G. Kaniadakis"],"venue":"Conference Proceedings, Third International Meeting for Applied Geoscience & Energy Expanded Abstracts","volume":"","number":"","pages":"670–674","doi":"10.1190/image2023-3916733.1","url":""},{"cat":"conf","year":2023,"title":"A κ-generalized Wasserstein metric in the graph-space for seismic waveform inversion issues","authors":["G. Kaniadakis","D. T. Hristopulos","S. L. E. F. da Silva","A. M. Scarfone"],"venue":"Abstracts, International Conference on Statistical Physics SigmaPhi-2023","volume":"","number":"","pages":"4","doi":"","url":""},{"cat":"journal","year":2023,"title":"Antropogenic seismicity and the breakdown of the self-similarity described by nonextensive models","authors":["P. Vega-Jorquera","E. de la Barra","S. L. E. F. da Silva"],"venue":"Physica A: Statistical Mechanics and its Applications","volume":"617","number":"","pages":"128690","doi":"10.1016/j.physa.2023.128690","url":""},{"cat":"conf","year":2023,"title":"Data selection for velocity model estimation using a circular shot OBN survey","authors":["F. T. Costa","S. L. E. F. da Silva","A. A. Karsou","F. V. Capuzzo","R. M. Moreira","J. Lopez","M. Cetale"],"venue":"Conference Proceedings, Third International Meeting for Applied Geoscience & Energy Expanded Abstracts","volume":"","number":"","pages":"581–585","doi":"10.1190/image2023-3910079.1","url":""},{"cat":"journal","year":2023,"title":"Generalized statistics: Applications to data inverse problems with outlier-resistance","authors":["G. Z. dos Santos Lima","J. V. T. de Lima","J. M. de Araújo","G. Corso","S. L. E. F. da Silva"],"venue":"PLOS ONE","volume":"18","number":"3","pages":"1–22","doi":"10.1371/journal.pone.0282578","url":""},{"cat":"conf","year":2023,"title":"Improvement of inverse scattering angle-domain common image gathers using optical flow","authors":["A. A. Karsou","S. L. E. F. da Silva","F. V. Capuzzo","F. T. Costa","J. Lopez","R. M. Moreira","M. Cetale"],"venue":"Conference Proceedings, Third International Meeting for Applied Geoscience & Energy Expanded Abstracts","volume":"","number":"","pages":"1618–1622","doi":"10.1190/image2023-3911479.1","url":""},{"cat":"conf","year":2023,"title":"Influence of node position uncertainty on FWI and Mirror-RTM","authors":["F. V. Capuzzo","M. Cetale","S. L. E. F. da Silva","R. M. Moreira","F. T. Costa","A. A. Karsou","J. Lopez"],"venue":"Conference Proceedings, Third International Meeting for Applied Geoscience & Energy Expanded Abstracts","volume":"","number":"","pages":"690–694","doi":"10.1190/image2023-3916807.1","url":""},{"cat":"journal","year":2023,"title":"Puzzle in inverse problems: Tsallis noise and Tsallis norm","authors":["A. A. Q. da Silveira","R. F. de Souza","J. L. S. da Costa","D. T. Santos","J. M. de Araujo","S. L. E. F. da Silva","G. Corso"],"venue":"The European Physical Journal B","volume":"96","number":"3","pages":"30","doi":"10.1140/epjb/s10051-023-00496-0","url":""},{"cat":"journal","year":2023,"title":"Quantifying population dynamics via a geometric mean predator–prey model","authors":["S. L. E. F. da Silva","A. Carbone","G. Kaniadakis"],"venue":"Chaos: An Interdisciplinary Journal of Nonlinear Science","volume":"33","number":"8","pages":"083102","doi":"10.1063/5.0158723","url":""},{"cat":"conf","year":2023,"title":"Suppressing 4D-noise induced by coordinate inaccuracies using a receiver-extension FWI strategy","authors":["S. L. E. F. da Silva","R. Moreira","B. Hochwart","M. Cetale"],"venue":"Conference Proceedings, EAGE Annual Conference & Exhibition","volume":"","number":"","pages":"","doi":"10.3997/2214-4609.202210385","url":""},{"cat":"journal","year":2022,"title":"A graph-space optimal transport objective function based on q-statistics to mitigate cycle-skipping issues in FWI","authors":["S. L. E. F. da Silva","A. Karsou","A. de Souza","F. Capuzzo","F. Costa","R. Moreira","M. Cetale"],"venue":"Geophysical Journal International","volume":"231","number":"2","pages":"1363–1385","doi":"10.1093/gji/ggac267","url":"https://doi.org/10.1093/gji/ggac267"},{"cat":"journal","year":2022,"title":"An outlier-resistant κ-generalized approach for robust physical parameter estimation","authors":["S. L. E. F. da Silva","R. Silva","G. Z. dos Santos Lima","J. M. de Araújo","G. Corso"],"venue":"Physica A: Statistical Mechanics and its Applications","volume":"600","number":"","pages":"127554","doi":"10.1016/j.physa.2022.127554","url":"https://www.sciencedirect.com/science/article/pii/S0378437122003855"},{"cat":"journal","year":2022,"title":"Full waveform inversion based on the non-parametric estimate of the probability distribution of the residuals","authors":["P. T. C. Carvalho","S. L. E. F. da Silva","E. F. Duarte","R. Bossier","G. Corso","J. M. de Araújo"],"venue":"Geophysical Journal International","volume":"229","number":"","pages":"35–55","doi":"10.1093/gji/ggab441","url":"https://doi.org/10.1093/gji/ggab441"},{"cat":"journal","year":2022,"title":"Full-waveform inversion based on generalized Rényi entropy using patched Green’s function techniques","authors":["W. A. Barbosa","S. L. E. F. da Silva","E. de la Barra","J. M. de Araújo"],"venue":"PLOS ONE","volume":"17","number":"11","pages":"1–27","doi":"10.1371/journal.pone.0275416","url":"https://doi.org/10.1371/journal.pone.0275416"},{"cat":"journal","year":2022,"title":"Hydraulic fracturing assessment on seismic hazard by Tsallis statistics","authors":["E. de la Barra","P. Vega-Jorquera","S. L. E. F. da Silva","H. Torres"],"venue":"The European Physical Journal B","volume":"95","number":"","pages":"92","doi":"10.1140/epjb/s10051-022-00361-6","url":""},{"cat":"conf","year":2022,"title":"Klein-Gordon Equation and Variable Density Effects on Acoustic Wave Propagation in Brazilian Pre-Salt Fields","authors":["S. L. E. F. da Silva","A. Karsou","R. Moreira","J. Lopez","M. Cetale"],"venue":"Conference Proceedings, EAGE Annual Conference & Exhibition","volume":"","number":"","pages":"","doi":"10.3997/2214-4609.202210385","url":""},{"cat":"journal","year":2022,"title":"Microseismic event detection in noisy environments with instantaneous spectral Shannon entropy","authors":["S. L. E. F. da Silva","G. Corso"],"venue":"Physical Review E","volume":"106","number":"","pages":"014133","doi":"10.1103/PhysRevE.106.014133","url":"https://link.aps.org/doi/10.1103/PhysRevE.106.014133"},{"cat":"journal","year":2022,"title":"κ-statistics approach to optimal transport waveform inversion","authors":["S. L. E. F. da Silva","G. Kaniadakis"],"venue":"Physical Review E","volume":"106","number":"","pages":"034113","doi":"10.1103/PhysRevE.106.034113","url":"https://link.aps.org/doi/10.1103/PhysRevE.106.034113"},{"cat":"journal","year":2021,"title":"Extensive and nonextensive statistics in seismic inversion","authors":["S. L. E. F. da Silva","G. Z. dos Santos Lima","J. M. de Araújo","G. Corso"],"venue":"Physica A: Statistical Mechanics and its Applications","volume":"563","number":"","pages":"125496","doi":"10.1016/j.physa.2020.125496","url":""},{"cat":"journal","year":2021,"title":"Full-waveform Inversion Based on q-Laplace Distribution","authors":["S. L. E. F. da Silva","J. M. de Araújo","G. Corso"],"venue":"Pure and Applied Geophysics","volume":"178","number":"","pages":"3415–3426","doi":"10.1007/s00024-021-02839-3","url":""},{"cat":"journal","year":2021,"title":"Improving Seismic Inversion Robustness via Deformed Jackson Gaussian","authors":["S. A. Silva","S. L. E. F. da Silva","R. F. de Souza","A. A. Marinho","J. M. de Araújo","C. G. Bezerra"],"venue":"Entropy","volume":"23","number":"","pages":"1081","doi":"10.3390/e23081081","url":""},{"cat":"conf","year":2021,"title":"Multi-scale q-FWI applied to circular shot OBN acquisition for accurate pre-salt velocity estimates.","authors":["S. L. E. F. da Silva","J. L. Lopez","J. M. de Araújo","G. Corso"],"venue":"First International Meeting for Applied Geoscience & Energy Expanded Abstracts 2021","volume":"","number":"","pages":"712–716","doi":"10.1190/segam2021-3581021.1","url":""},{"cat":"journal","year":2021,"title":"Newton’s cooling law in generalised statistical mechanics","authors":["S. L. E. F. da Silva"],"venue":"Physica A: Statistical Mechanics and its Applications","volume":"565","number":"","pages":"125539","doi":"10.1016/j.physa.2020.125539","url":""},{"cat":"journal","year":2021,"title":"Nonextensive Gutenberg–Richter law and the connection between earthquakes and marsquakes","authors":["S. L. E. F. da Silva","G. Corso"],"venue":"The European Physical Journal B","volume":"94","number":"","pages":"25","doi":"10.1140/epjb/s10051-020-00015-5","url":""},{"cat":"journal","year":2021,"title":"Nonextensive statistical mechanics for robust physical parameter estimation: the role of entropic index","authors":["J. V. de Lima","S. L. E. F. da Silva","J. M. de Araújo","G. Corso","G. Z. dos Santos Lima"],"venue":"The European Physical Journal - Plus (EPJ Plus)","volume":"136","number":"","pages":"269","doi":"10.1140/epjp/s13360-021-01274-6","url":""},{"cat":"journal","year":2021,"title":"Robust approaches for inverse problems based on Tsallis and Kaniadakis generalised statistics","authors":["S. L. E. F. da Silva","G. Z. dos Santos Lima","E. V. Volpe","J. M. de Araújo","G. Corso"],"venue":"The European Physical Journal - Plus (EPJ Plus)","volume":"136","number":"","pages":"518","doi":"10.1140/epjp/s13360-021-01521-w","url":""},{"cat":"journal","year":2021,"title":"Robust parameter estimation based on the generalized log-likelihood in the context of Sharma-Taneja-Mittal measure","authors":["S. L. E. F. da Silva","G. Kaniadakis"],"venue":"Physical Review E","volume":"104","number":"","pages":"024107","doi":"10.1103/PhysRevE.104.024107","url":""},{"cat":"journal","year":2021,"title":"κ-generalised Gutenberg-Richter law and the self-similarity of earthquakes","authors":["S. L. E. F. da Silva"],"venue":"Chaos, Solitons and Fractals","volume":"143","number":"","pages":"110622","doi":"10.1016/j.chaos.2020.110622","url":""},{"cat":"conf","year":2020,"title":"An Objective Function Based on q-Gaussian Distribution for Full-Waveform Inversion","authors":["S. L. E. F. da Silva","C. A. N. da Costa","P. T. C. Carvalho","J. M. de Araújo","L. S. Lucena","G. Corso"],"venue":"Conference Proceedings, EAGE Annual Conference & Exhibition Online","volume":"","number":"","pages":"","doi":"10.3997/2214-4609.202010536","url":""},{"cat":"journal","year":2020,"title":"An objective function for full-waveform inversion based on frequency-dependent offset-preconditioning","authors":["S. L. E. F. da Silva","P. T. C. Carvalho","C. A. N. da Costa","J. M. de Araújo","G. Corso"],"venue":"PLoS ONE","volume":"15","number":"10","pages":"e0240999","doi":"10.1371/journal.pone.0240999","url":""},{"cat":"conf","year":2020,"title":"Automatic Microseismic Event Detection in Noisy Environments from Unfiltered Seismic Signals Using Instantaneous Spectral Shannon Entropy","authors":["S. L. E. F. da Silva","C. A. N. da Costa","P. T. C. Carvalho","J. M. de Araújo","G. Corso"],"venue":"Conference Proceedings, EAGE Annual Conference & Exhibition Online","volume":"","number":"","pages":"","doi":"10.3997/2214-4609.202011156","url":"http://goo.gl/pfdUfm"},{"cat":"journal","year":2020,"title":"Full-waveform inversion based on Kaniadakis statistics","authors":["S. L. E. F. da Silva","P. T. C. Carvalho","J. M. de Araújo","G. Corso"],"venue":"Physical Review E","volume":"101","number":"","pages":"053311","doi":"10.1103/PhysRevE.101.053311","url":"https://link.aps.org/doi/10.1103/PhysRevE.101.053311"},{"cat":"journal","year":2020,"title":"Robust full-waveform inversion using q-statistics","authors":["S. L. E. F. da Silva","C. A. N. da Costa","P. T. C. Carvalho","J. M. de Araújo","L. dos Santos Lucena","G. Corso"],"venue":"Physica A: Statistical Mechanics and its Applications","volume":"548","number":"","pages":"124473","doi":"10.1016/j.physa.2020.124473","url":"http://www.sciencedirect.com/science/article/pii/S0378437120302053"},{"cat":"journal","year":2020,"title":"Tsallis Entropy, Likelihood, and the Robust Seismic Inversion","authors":["I. P. de Lima","S. L. E. F. da Silva","G. Corso","J. M. de Araújo"],"venue":"Entropy","volume":"22","number":"","pages":"464","doi":"10.3390/e22040464","url":""},{"cat":"conf","year":2019,"title":"A Bayesian Approach for Full-waveform Inversion Using Wide-aperture Seismic Data","authors":["S. L. E. F. da Silva","P. T. C. Carvalho","C. A. N. da Costa","J. M. de Araújo","G. Corso"],"venue":"Conference Proceedings, Fourth EAGE Conference on Petroleum Geostatistics","volume":"","number":"","pages":"","doi":"10.3997/2214-4609.201902271","url":""},{"cat":"conf","year":2019,"title":"A hybrid regularization scheme combining Tikhonov stabilizer with Cauchy function for multiscale frequency domain full-waveform inversion","authors":["R. C. L. Rêgo","C. A. N. da Costa","E. F. Duarte","S. L. E. F. da Silva","J. M. de Araújo","W. A. Lima"],"venue":"SEG Technical Program Expanded Abstracts 2019","volume":"","number":"","pages":"1630","doi":"10.1190/segam2019-3216751.1","url":""},{"cat":"conf","year":2019,"title":"Bioinspired strategy for FWI using frequency alternate grouping","authors":["S. L. E. F. da Silva","J. M. de Araújo","L. S. Lucena","G. Corso"],"venue":"Proceedings of the 16th International Congress of the Brazilian Geophysical Society&Expogef","volume":"","number":"","pages":"","doi":"10.22564/16cisbgf2019.074","url":""},{"cat":"confnac","year":2019,"title":"Construção de mapas de iluminação sísmica baseada na função de ponto de espalhamento para análise de modelos de velocidade","authors":["R. A. A. Paula","S. L. E. F. da Silva","P. T. T. Carvalho","J. M. Araújo","G. CORSO"],"venue":"Anais do II Simpósio Brasileiro de Geologia e Geofísica Marinha","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"conf","year":2019,"title":"Frequency-domain full waveform inversion strategy using offset-weighted signals","authors":["S. L. E. F. da Silva","C. A. N. da Costa","P. T. C. Carvalho","J. M. Araújo","G. Corso"],"venue":"Proceedings of the 16th International Congress of the Brazilian Geophysical Society&Expogef","volume":"","number":"","pages":"","doi":"10.22564/16cisbgf2019.149","url":""},{"cat":"conf","year":2019,"title":"Full-waveform inversion with fractality information of the subsurface","authors":["P. T. C. Carvalho","G. Corso","S. L. E. F. da Silva","J. M. de Araújo","L. S. Lucena","Y. Wang"],"venue":"SEG Technical Program Expanded Abstracts 2019","volume":"","number":"","pages":"1511","doi":"10.1190/segam2019-3216601.1","url":""},{"cat":"conf","year":2019,"title":"Full-waveform inversion with subsurface fractal information and variable model uncertainties","authors":["P. T. C. Carvalho","G. Corso","S. L. E. F. da Silva","J. M. Araújo","L. S. Lucena"],"venue":"Proceedings of the 16th International Congress of the Brazilian Geophysical Society&Expogef","volume":"","number":"","pages":"","doi":"10.22564/16cisbgf2019.151","url":""},{"cat":"conf","year":2019,"title":"Misfit function for full waveform inversion based on Shannon entropy for deeper velocity model updates","authors":["S. L. E. F. da Silva","P. T. C. Carvalho","C. A. N. da Costa","J. M. de Araújo","G. Corso"],"venue":"SEG Technical Program Expanded Abstracts 2019","volume":"","number":"","pages":"1556","doi":"10.1190/segam2019-3214969.1","url":""},{"cat":"journal","year":2019,"title":"Using fish lateral line sensing to improve seismic acquisition and processing","authors":["F. W. de Freitas Silva","S. L. E. F. da Silva","M. V. C. Henriques","G. Corso"],"venue":"PLoS ONE","volume":"14","number":"4","pages":"e0213847","doi":"10.1371/journal.pone.0213847","url":"https://doi.org/10.1371/journal.pone.0213847"},{"cat":"conf","year":2018,"title":"Velocity model building with entropic methods in the full-waveform inversion (FWI) to subsoil imaging","authors":["S. L. E. F. da Silva","P. T. C. Carvalho","G. Corso"],"venue":"Proceedings of the Rio Oil & Gas Expo and Conference","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"confnac","year":2017,"title":"Análise da sequência sísmica de 2010 em São Caetano, PE: Momento sísmico, frequência de esquina e queda de esforços","authors":["J. Juliá","S. L. E. F. da Silva","G. A. Prieto","P. A. R. Ferreira"],"venue":"Anais do 27º simpósio de geologia do nordeste","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"confnac","year":2017,"title":"Cálculo de magnitudes por duração em estações sismográficas localizadas na Zona Sísmica Acaraú","authors":["P. H. S. Oliveira","P. L. Duarte","J. M. Ferreira","A. F. Nascimento","F. H. R. Bezerra","S. L. E. F. da Silva"],"venue":"Anais do 27º simpósio de geologia do nordeste","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"conf","year":2017,"title":"Deviatoric Moment Tensor Solutions for Small Intraplate Earthquakes in NE Brazil from P, SV, and SH Spectral Amplitudes","authors":["P. A. R. Ferreira","J. Juliá","S. L. E. F. da Silva"],"venue":"Proceedings of the 3rd Assembly of the LACSC - IASPEI","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"journal","year":2017,"title":"Deviatoric Moment Tensor Solutions from Spectral Amplitudes in Surface Network Recordings: Case Study in São Caetano, Pernambuco, Brazil","authors":["S. L. E. F. da Silva","J. Julià","F. H. R. Bezerra"],"venue":"Bulletin of the Seismological Society of America","volume":"107","number":"3","pages":"1495–1511","doi":"10.1785/0120160160","url":"https://doi.org/10.1785/0120160160"},{"cat":"conf","year":2016,"title":"Investigating Intraplate Earthquakes in the Brazilian Northeast: Moment tensors, Source Properties","authors":["J. Juliá","S. L. E. F. da Silva","G. A. Prieto","P. A. R. Ferreira"],"venue":"Proceedings of the 2016 American Geophysical Union Fall Meeting","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"confnac","year":2012,"title":"Análise de escalas temporais da precipitação na parte Leste do Nordeste do Brasil usando Transformada Wavelet","authors":["S. L. E. F. da Silva","C. M. Santos e Silva"],"venue":"Anais do Congresso de Matemática Aplicada e Computacional - CMAC Nordeste 2012","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"confnac","year":2010,"title":"Determinação automática dos parâmetros atmosféricos e abundâncias químicas a partir de espectros estelares","authors":["S. L. E. F. da Silva","B. L. C. Martins"],"venue":"Anais CIC 2010","volume":"","number":"","pages":"","doi":"","url":""},{"cat":"confnac","year":2009,"title":"Caracterização automática de estrelas através de análise espectral de parâmetros atmosféricos e abundâncias químicas","authors":["S. L. E. F. da Silva","B. L. C. Martins"],"venue":"Anais CIC 2009","volume":"","number":"","pages":"","doi":"","url":""}];
+
+/* ---------- κ-Gaussian figure ---------- */
+(function () {
+  const svg = document.getElementById('kplot');
+  const NS = 'http://www.w3.org/2000/svg';
+  const narrow = svg.getBoundingClientRect().width < 600;
+  const W = narrow ? 480 : 1000, top = 10, base = narrow ? 150 : 176, X = 5.5;
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + (base + 32));
+  const sx = x => W / 2 + x * (W / 2) / X;
+  const sy = y => base - y * (base - top);
+  const expk = (u, k) => k < 1e-6 ? Math.exp(u) : Math.pow(Math.sqrt(1 + k * k * u * u) + k * u, 1 / k);
+  const pts = k => {
+    const a = [];
+    for (let i = 0; i <= 400; i++) { const x = -X + (2 * X * i) / 400; a.push([sx(x), sy(expk(-x * x / 2, k))]); }
+    return a;
+  };
+  const gain = k => {
+    const a = pts(k), g = pts(0).reverse();
+    return 'M' + a.concat(g).map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('L') + 'Z';
+  };
+  const path = k => {
+    let d = '';
+    for (let i = 0; i <= 400; i++) {
+      const x = -X + (2 * X * i) / 400;
+      d += (i ? 'L' : 'M') + sx(x).toFixed(1) + ' ' + sy(expk(-x * x / 2, k)).toFixed(1);
+    }
+    return d;
+  };
+  const el = (tag, attrs) => { const n = document.createElementNS(NS, tag); for (const a in attrs) n.setAttribute(a, attrs[a]); return n; };
+
+  svg.appendChild(el('line', { class: 'axis', x1: 0, x2: W, y1: base, y2: base }));
+  [-4, -2, 0, 2, 4].forEach(t => {
+    svg.appendChild(el('line', { class: 'axis', x1: sx(t), x2: sx(t), y1: base, y2: base + 5 }));
+    const lab = el('text', { class: 'tick', x: sx(t), y: base + 22, 'text-anchor': 'middle' });
+    lab.textContent = t < 0 ? '−' + (-t) : t; svg.appendChild(lab);
+  });
+  const shade = el('path', { class: 'gain', d: gain(0.7) }); svg.appendChild(shade);
+  const g = el('g', {}); svg.appendChild(g);
+  const fam = [0, 0.3, 0.55, 0.8].map((k, i) => {
+    const p = el('path', { class: 'fam' + (i === 0 ? ' gauss' : ''), d: path(k) });
+    g.appendChild(p); return p;
+  });
+  const live = el('path', { class: 'live', d: path(0.7) });
+  g.appendChild(live);
+  [...fam.slice(1), live].forEach(p => {
+    p.style.setProperty('--len', Math.ceil(p.getTotalLength()));
+    p.classList.add('draw');
+  });
+  const s = document.getElementById('kslider'), out = document.getElementById('kval');
+  s.addEventListener('input', () => {
+    const k = +s.value;
+    live.classList.remove('draw'); live.style.strokeDasharray = 'none';
+    live.setAttribute('d', path(k)); shade.setAttribute('d', gain(k));
+    out.textContent = 'κ = ' + k.toFixed(2);
+  });
+})();
+
+/* ---------- publications ---------- */
+(function () {
+  const KINDS = [
+    ['all', 'All'],
+    ['journal', 'Journal articles'],
+    ['conf', 'International conferences'],
+    ['chapter', 'Book chapters'],
+    ['confnac', 'Brazilian meetings'],
+  ];
+  const label = { journal: 'Journal article', conf: 'Conference paper', chapter: 'Book chapter', confnac: 'Brazilian meeting' };
+  const ME = 'S. L. E. F. da Silva';
+  const count = k => k === 'all' ? PUBS.length : PUBS.filter(p => p.cat === k).length;
+  let kind = 'journal', q = '', showAll = false;
+  const RECENT = 6; // years shown before "Show all years"
+
+  const chips = document.getElementById('chips');
+  KINDS.forEach(([k, name]) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.dataset.k = k;
+    b.innerHTML = name + '<span>' + count(k) + '</span>';
+    b.setAttribute('aria-pressed', k === kind);
+    b.onclick = () => { kind = k; chips.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); render(); };
+    chips.appendChild(b);
+  });
+  document.getElementById('pubsum').textContent =
+    count('journal') + ' journal articles, ' + count('conf') + ' international conference papers and ' +
+    count('chapter') + ' book chapter. The complete record is on ORCID and the Lattes CV.';
+
+  const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+  function item(p) {
+    const authors = p.authors.map(a => a === ME ? '<b>' + esc(a) + '</b>' : esc(a)).join(', ');
+    let v = '<i>' + esc(p.venue) + '</i>';
+    if (p.volume) v += ' ' + esc(p.volume) + (p.number ? '(' + esc(p.number) + ')' : '');
+    if (p.pages && p.cat !== 'conf') v += ', ' + esc(p.pages);
+    if (kind === 'all') v = '<span class="kind">' + label[p.cat] + '.</span> ' + v;
+    const link = p.doi ? ' <a class="doi" href="https://doi.org/' + esc(p.doi) + '">doi:' + esc(p.doi) + '</a>'
+               : p.url ? ' <a href="' + esc(p.url) + '">link</a>' : '';
+    return '<li class="pub"><span class="t">' + esc(p.title) + '</span><span class="a">' + authors +
+           '</span><span class="v">' + v + '.' + link + '</span></li>';
+  }
+
+  function render() {
+    const nq = norm(q.trim());
+    const list = PUBS.filter(p => (kind === 'all' || p.cat === kind) &&
+      (!nq || norm(p.title + ' ' + p.authors.join(' ') + ' ' + p.venue + ' ' + p.year).includes(nq)));
+    const years = [...new Set(list.map(p => p.year))].sort((a, b) => b - a);
+    const limited = !showAll && !nq && years.length > RECENT;
+    const shown = limited ? years.slice(0, RECENT) : years;
+    const host = document.getElementById('publist');
+    host.innerHTML = list.length ? shown.map(y =>
+      '<div class="year"><span class="y">' + y + '</span><ol>' +
+      list.filter(p => p.year === y).map(item).join('') + '</ol></div>').join('')
+      : '<p class="empty">No publications match “' + esc(q) + '”. Try a co-author, a journal or a keyword such as “Tsallis”.</p>';
+    const more = document.getElementById('more');
+    more.hidden = !limited;
+    if (limited) more.textContent = 'Show all years (' + years[years.length - 1] + '–' + years[RECENT] + ')';
+  }
+  document.getElementById('q').addEventListener('input', e => { q = e.target.value; render(); });
+  document.getElementById('more').onclick = () => { showAll = true; render(); };
+  render();
+})();
+
+/* ---------- nav highlight, year, theme ---------- */
+(function () {
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const links = [...document.querySelectorAll('.bar nav a')];
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
+  }), { rootMargin: '-40% 0px -55% 0px' });
+  document.querySelectorAll('section.block').forEach(s => io.observe(s));
+
+  const root = document.documentElement, btn = document.getElementById('themeBtn');
+  const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  const sync = () => btn.textContent = isDark() ? 'Switch to light theme' : 'Switch to dark theme';
+  try { const t = localStorage.getItem('theme'); if (t) root.dataset.theme = t; } catch (e) {}
+  sync();
+  btn.onclick = () => {
+    root.dataset.theme = isDark() ? 'light' : 'dark';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+    sync();
+  };
+})();
+</script>
 </body>
 </html>
